@@ -1,0 +1,36 @@
+{
+  "name": "banner_prototype_automatic",
+  "version": "1.0.0",
+  "description": "make gulp file that create maps and files",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rezafitriaman/banner_prototype_automatic.git"
+  },
+  "author": "Reza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rezafitriaman/banner_prototype_automatic/issues"
+  },
+  "homepage": "https://github.com/rezafitriaman/banner_prototype_automatic#readme",
+  "dependencies": {
+    "gulp-concat": "^2.6.1",
+    "browser-sync": "^2.24.4",
+    "file-exists": "^5.0.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-concat-css": "^3.1.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-order": "^1.1.1",
+    "gulp-rename": "^1.2.3",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "normalize.css": "^8.0.0",
+    "gulp-file": "^0.4.0"
+  },
+  "devDependencies": {}
+}
