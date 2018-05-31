@@ -136,30 +136,7 @@ function setupDom() {
 	creative.dom.spinner = document.querySelector('#spinner');
 	creative.dom.banner = document.querySelector('#content');
 
-	//custom el
-	creative.dom.copy1 = document.querySelector('#copy1Wrapper');
-	creative.dom.copy1Text = document.querySelector('#copy1Wrapper').querySelector('.text');
-	creative.dom.copy2 = document.querySelector('#copy2Wrapper');
-	creative.dom.copy2Text = document.querySelector('#copy2Wrapper').querySelector('.text');
-
-	creative.dom.background = document.querySelector('#background');
-	creative.dom.rollOverImg = document.querySelector('#rollOverImg');
-	creative.dom.footer = document.querySelector('#footer');
-
-	creative.dom.copy3 = document.querySelector('#copy3Wrapper');
-	creative.dom.copy3_1 = document.querySelector('#copy3-1');
-	creative.dom.copy3_2 = document.querySelector('#copy3-2');
-	creative.dom.copy3_3 = document.querySelector('#copy3-3');
-
-	creative.dom.cta = document.querySelector('#CTA');
-	creative.dom.ctaText = document.querySelector('#CTA').querySelector('.text');
-
-	creative.dom.gradient = document.querySelector('#gradient');
-
-	creative.dom.skyline = document.querySelector('#skyline');
-	creative.dom.skylineBg = document.querySelector('#skylineBg');
-
-	creative.dom.logoBig = document.querySelector('#logoBig');
+	//CUSTOM EL
 
 }
 
@@ -181,8 +158,10 @@ function startAds(prefix) {
 
 /*custom animation*/
 function animation() {
+	//CUSTOM EL
 
-}`;
+}
+`;
 
 /*requiered*/
 let gulp = require('gulp'),
@@ -236,9 +215,9 @@ let size = arg.s || arg.size,
   	category = arg.c || arg.category;
 
 /*Second use gulp build to create the banner with the right size*/
-gulp.task('build', (cb) => {
+gulp.task('argument', (cb) => {
 
-	console.log('build work!')
+	console.log('argument work!')
 
 	/*check if args is empty*/
 	function isEmpty(obj) {
@@ -248,20 +227,11 @@ gulp.task('build', (cb) => {
 	    }
 	    return true;
 	}
-	console.log(`ifempty`, arg)
 
 	if(!isEmpty(arg) && 
 		( arg.hasOwnProperty('s') || arg.hasOwnProperty('size') ) && 
 		( arg.hasOwnProperty('c') || arg.hasOwnProperty('category') ) ) {
 
-		/*gulp.start('add-size');*/
-
-		/*gulp.start('concat');
-		gulp.start('src_html');
-		gulp.start('concatCss');
-		gulp.start('html');
-		gulp.start('sass');*/
-		
 	}else {
 		console.log('help: try to make directories first = gulp create_dir ')
 		console.log('help: try to use this example = build --size "320x480" --category "sky" ')
@@ -272,7 +242,7 @@ gulp.task('build', (cb) => {
 /*------------------------------------------------------------------------------------------------*/
 
 /*replace size on style.scss*/
-gulp.task('add-size', ['build'],  () => {
+gulp.task('add-size', ['argument'],  () => {
 	console.log('add-size works!')
 
 	console.log(arg.s || arg.size)
@@ -281,29 +251,6 @@ gulp.task('add-size', ['build'],  () => {
   return gulp.src(['src/' + category + '/scss/style.scss']) // Any file globs are supported
     .pipe(replace(/@import\s*'\d{3}x\d{3}'/g, '@import \'' + size + '\''))
     .pipe(gulp.dest('src/'  + category + '/scss/'))
-});
-
-gulp.task('concat', () => {
-	console.log('concat work!');
-
-	return gulp.src('src/'+ category +'/js/*.js')
-	  	.pipe(order([
-		    "TweenMax.min.js",
-		    "main.js"
-		  ]))
-	    .pipe(concat('all.js'))
-	    .pipe(gulp.dest('public/' + size))
-	    .pipe(reload({stream:true}));
-
-});
-
-/*make html go to public*/
-gulp.task('src_html', () =>{
-	console.log('src_html work!');
-
-    gulp.src('src/' + category + '/*.html')
-    .pipe(gulp.dest('public/' + size))
-    .pipe(reload({stream:true}));
 });
 
 gulp.task('sass', ['add-size'], () => {
@@ -322,7 +269,30 @@ gulp.task('sass', ['add-size'], () => {
 	    .pipe(reload({stream:true}));
 });
 
-gulp.task('concatCss', () => {
+gulp.task('concat', ['sass'], () => {
+	console.log('concat work!');
+
+	return gulp.src('src/'+ category +'/js/*.js')
+	  	.pipe(order([
+		    "TweenMax.min.js",
+		    "main.js"
+		  ]))
+	    .pipe(concat('all.js'))
+	    .pipe(gulp.dest('public/' + size))
+	    .pipe(reload({stream:true}));
+
+});
+
+/*make html go to public*/
+gulp.task('src_html', ['concat'], () =>{
+	console.log('src_html work!');
+
+    gulp.src('src/' + category + '/*.html')
+    .pipe(gulp.dest('public/' + size))
+    .pipe(reload({stream:true}));
+});
+
+gulp.task('concatCss', ['src_html'], () => {
 	console.log('concatCss work!');
 
 	return gulp.src(['!public/' + size +'/all.css','public/' + size + '/*.css'])
@@ -333,7 +303,7 @@ gulp.task('concatCss', () => {
 		.pipe(reload({stream:true}));
 });
 
-gulp.task('html', () =>{
+gulp.task('html', ['concatCss'], () =>{
 	console.log('html work!');
 
 	return gulp.src('public/' + size + '/*.html')
@@ -341,7 +311,7 @@ gulp.task('html', () =>{
 });
 
 /*browser-sync*/
-gulp.task('browser-sync', () => {
+gulp.task('browser-sync', ['html'], () => {
 	console.log('browser-sync work!');
 	browserSync({
 		server: {
@@ -350,7 +320,23 @@ gulp.task('browser-sync', () => {
 			proxy: "grqbge-nwx7013:3000"
 		}
 	});
+	
 });
+
+
+gulp.task('build', () => {
+
+	fileExists('src/lead/scss/style.scss').then(exists => {
+		if(exists) {
+			gulp.start('browser-sync');
+		}else {
+			console.log('pls create directory first : gulp create_dir');
+		}
+	});
+	
+});
+
+
 
 /*watch*/
 gulp.task('watch', function() {
@@ -443,7 +429,7 @@ gulp.task('createIndexHTML', () => {
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        /*<meta name="ad.size" content="width=160,height=600">*/
+        <meta name="ad.size" content="width=160,height=600">
 
         <title>Banner</title>
 

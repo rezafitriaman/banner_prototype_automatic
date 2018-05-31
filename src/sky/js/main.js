@@ -136,30 +136,7 @@ function setupDom() {
 	creative.dom.spinner = document.querySelector('#spinner');
 	creative.dom.banner = document.querySelector('#content');
 
-	//custom el
-	creative.dom.copy1 = document.querySelector('#copy1Wrapper');
-	creative.dom.copy1Text = document.querySelector('#copy1Wrapper').querySelector('.text');
-	creative.dom.copy2 = document.querySelector('#copy2Wrapper');
-	creative.dom.copy2Text = document.querySelector('#copy2Wrapper').querySelector('.text');
-
-	creative.dom.background = document.querySelector('#background');
-	creative.dom.rollOverImg = document.querySelector('#rollOverImg');
-	creative.dom.footer = document.querySelector('#footer');
-
-	creative.dom.copy3 = document.querySelector('#copy3Wrapper');
-	creative.dom.copy3_1 = document.querySelector('#copy3-1');
-	creative.dom.copy3_2 = document.querySelector('#copy3-2');
-	creative.dom.copy3_3 = document.querySelector('#copy3-3');
-
-	creative.dom.cta = document.querySelector('#CTA');
-	creative.dom.ctaText = document.querySelector('#CTA').querySelector('.text');
-
-	creative.dom.gradient = document.querySelector('#gradient');
-
-	creative.dom.skyline = document.querySelector('#skyline');
-	creative.dom.skylineBg = document.querySelector('#skylineBg');
-
-	creative.dom.logoBig = document.querySelector('#logoBig');
+	//CUSTOM EL
 
 }
 
@@ -181,5 +158,6 @@ function startAds(prefix) {
 
 /*custom animation*/
 function animation() {
+	//CUSTOM EL
 
 }
