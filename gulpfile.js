@@ -142,7 +142,7 @@ function setupDom() {
 
 function show() {
 	creative.dom.banner.style.display = 'block';
-	/*creative.dom.spinner.style.display = 'none';*/
+	creative.dom.spinner.style.display = 'none';
 }
 
 /*custom dynamicContent*/
@@ -253,7 +253,7 @@ gulp.task('add-size', ['argument'],  () => {
     .pipe(gulp.dest('src/'  + category + '/scss/'))
 });
 
-gulp.task('sass', ['add-size'], () => {
+gulp.task('sass_begin', ['add-size'], () => {
 	console.log('sass work!');
 
   	return gulp.src('src/' + category + '/scss/*.scss')
@@ -269,7 +269,23 @@ gulp.task('sass', ['add-size'], () => {
 	    .pipe(reload({stream:true}));
 });
 
-gulp.task('concat', ['sass'], () => {
+gulp.task('sass', () => {
+	console.log('sass work!');
+
+  	return gulp.src('src/' + category + '/scss/*.scss')
+  		.pipe(wait(5000))
+	  	.pipe(plumber())
+	  	.pipe(sourcemaps.init())
+		.pipe(sass().on('error', sass.logError))
+	    .pipe(autoprefixer({
+	    	browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'android 4']
+		}))
+		.pipe(sourcemaps.write())
+	    .pipe(gulp.dest('public/' + size))
+	    .pipe(reload({stream:true}));
+});
+
+gulp.task('concat', ['sass_begin'], () => {
 	console.log('concat work!');
 
 	return gulp.src('src/'+ category +'/js/*.js')
@@ -284,6 +300,14 @@ gulp.task('concat', ['sass'], () => {
 });
 
 /*make html go to public*/
+gulp.task('src_html_begin', ['concat'], () =>{
+	console.log('src_html work!');
+
+    gulp.src('src/' + category + '/*.html')
+    .pipe(gulp.dest('public/' + size))
+    .pipe(reload({stream:true}));
+});
+
 gulp.task('src_html', ['concat'], () =>{
 	console.log('src_html work!');
 
@@ -292,7 +316,7 @@ gulp.task('src_html', ['concat'], () =>{
     .pipe(reload({stream:true}));
 });
 
-gulp.task('concatCss', ['src_html'], () => {
+gulp.task('concatCss_begin', ['src_html_begin'], () => {
 	console.log('concatCss work!');
 
 	return gulp.src(['!public/' + size +'/all.css','public/' + size + '/*.css'])
@@ -303,7 +327,25 @@ gulp.task('concatCss', ['src_html'], () => {
 		.pipe(reload({stream:true}));
 });
 
-gulp.task('html', ['concatCss'], () =>{
+gulp.task('concatCss', () => {
+	console.log('concatCss work!');
+
+	return gulp.src(['!public/' + size +'/all.css','public/' + size + '/*.css'])
+		.pipe(sourcemaps.init())
+	    .pipe(concatCss("all.css"))
+	    .pipe(sourcemaps.write())
+	    .pipe(gulp.dest('public/' + size))
+		.pipe(reload({stream:true}));
+});
+
+gulp.task('html_begin', ['concatCss_begin'], () =>{
+	console.log('html work!');
+
+	return gulp.src('public/' + size + '/*.html')
+		.pipe(reload({stream:true}));
+});
+
+gulp.task('html', () =>{
 	console.log('html work!');
 
 	return gulp.src('public/' + size + '/*.html')
@@ -311,7 +353,7 @@ gulp.task('html', ['concatCss'], () =>{
 });
 
 /*browser-sync*/
-gulp.task('browser-sync', ['html'], () => {
+gulp.task('browser-sync', ['watch'], () => {
 	console.log('browser-sync work!');
 	browserSync({
 		server: {
@@ -323,6 +365,18 @@ gulp.task('browser-sync', ['html'], () => {
 	
 });
 
+/*watch*/
+gulp.task('watch', ['html_begin'], () => {
+	console.log('watch');
+
+	gulp.watch('src/' + category + '/*.html',['src_html']);
+	gulp.watch('src/' + category + '/js/*.js', ['concat']);
+	/*gulp.watch('cv/js/dev/*.js', ['scripts']);*/
+	gulp.watch('src/' + category + '/scss/style.scss', ['sass']);
+	
+	gulp.watch('public/' + size + '/style.css', ['concatCss']);
+	gulp.watch('public/' + size + '/*.html', ['html']);
+});
 
 gulp.task('build', () => {
 
@@ -333,21 +387,6 @@ gulp.task('build', () => {
 			console.log('pls create directory first : gulp create_dir');
 		}
 	});
-	
-});
-
-
-
-/*watch*/
-gulp.task('watch', function() {
-	console.log('watch');
-
-	gulp.watch('src/' + category + '/*.html',['src_html']);
-	gulp.watch('src/' + category + '/js/*.js', ['concat']);
-	/*gulp.watch('cv/js/dev/*.js', ['scripts']);*/
-	gulp.watch('src/' + category + '/scss/style.scss', ['sass']);
-	gulp.watch('public/' + size + '/style.css', ['concatCss']);
-	gulp.watch('public/' + size + '/*.html', ['html']);
 });
 
 /*------------------------------------------------------------------------------------------------*/

@@ -137,12 +137,13 @@ function setupDom() {
 	creative.dom.banner = document.querySelector('#content');
 
 	//CUSTOM EL
+	creative.dom.test = document.getElementById('reza'); 
 
 }
 
 function show() {
 	creative.dom.banner.style.display = 'block';
-	/*creative.dom.spinner.style.display = 'none';*/
+	creative.dom.spinner.style.display = 'none';
 }
 
 /*custom dynamicContent*/
@@ -152,6 +153,7 @@ function startAds(prefix) {
 	/*show banner STANDARD!*/
 	show();
 	/*Dynamic Content*/
+
 
 	animation();
 }
