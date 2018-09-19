@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/rezafitriaman/banner_prototype_automatic.git"
   },
-  "author": "Reza",
+  "author": "fitriaman@bgenius.com",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rezafitriaman/banner_prototype_automatic/issues"
@@ -30,7 +30,11 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "normalize.css": "^8.0.0",
-    "gulp-file": "^0.4.0"
+    "gulp-file": "^0.4.0",
+    "gsap": "^2.0.1",
+    "gulp-image": "^4.3.0",
+    "gulp-string-replace": "^1.1.1",
+    "gulp-wait": "^0.0.2"
   },
   "devDependencies": {}
 }

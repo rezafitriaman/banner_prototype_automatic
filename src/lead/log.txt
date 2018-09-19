@@ -1,0 +1,4 @@
+19-09-2018
+make all price item display flex alight item center and justify content center.
+on his child on de box applyd align self flex start of flex-end
+this make all the price responsief and it still on middle of the content.. exaple 2+2 or 1+1 still on mid of the content

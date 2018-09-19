@@ -123,7 +123,6 @@ function adds(development) {
 	}else {
 		/*console.log('live');*/
 		window.envi = 'live';
-		dynamicContent
 		startAds(dynamicContent);
 	}
 
@@ -180,6 +179,7 @@ let gulp = require('gulp'),
 	fs   = require('fs'),
 	replace = require('gulp-string-replace'),
 	wait = require('gulp-wait'),
+	image = require('gulp-image'), //compress image
 	fileExists = require('file-exists'); //need to create folder
 
 /*Test build*/
@@ -234,7 +234,7 @@ gulp.task('argument', (cb) => {
 
 	}else {
 		console.log('help: try to make directories first = gulp create_dir ')
-		console.log('help: try to use this example = build --size "320x480" --category "sky" ')
+		console.log('help: try to use this example = gulp build --size "320x480" --category "sky" ')
 	}
 	cb();
 });
@@ -249,7 +249,7 @@ gulp.task('add-size', ['argument'],  () => {
 	console.log(arg.c || arg.category)
 
   return gulp.src(['src/' + category + '/scss/style.scss']) // Any file globs are supported
-    .pipe(replace(/@import\s*'\d{3}x\d{3}'/g, '@import \'' + size + '\''))
+    .pipe(replace(/@import\s*'\d{3}x\d{2,3}'/g, '@import \'' + size + '\''))
     .pipe(gulp.dest('src/'  + category + '/scss/'))
 });
 
@@ -257,7 +257,6 @@ gulp.task('sass_begin', ['add-size'], () => {
 	console.log('sass work!');
 
   	return gulp.src('src/' + category + '/scss/*.scss')
-  		.pipe(wait(5000))
 	  	.pipe(plumber())
 	  	.pipe(sourcemaps.init())
 		.pipe(sass().on('error', sass.logError))
@@ -308,6 +307,21 @@ gulp.task('src_html_begin', ['concat'], () =>{
     .pipe(reload({stream:true}));
 });
 
+/*make png go to public*/
+gulp.task('image_begin', () => {
+	console.log('img work!');
+  gulp.src('src/' + category + '/img/*')
+    .pipe(image())
+    .pipe(gulp.dest('public/' + size));
+});
+
+gulp.task('src_font_begin', () =>{
+	console.log('src_font_begin work!');
+
+    gulp.src('src/' + category + '/font/*')
+    .pipe(gulp.dest('public/' + size))
+});
+
 gulp.task('src_html', ['concat'], () =>{
 	console.log('src_html work!');
 
@@ -353,7 +367,7 @@ gulp.task('html', () =>{
 });
 
 /*browser-sync*/
-gulp.task('browser-sync', ['watch'], () => {
+gulp.task('browser-sync', ['watch', 'src_font_begin', 'image_begin'], () => {
 	console.log('browser-sync work!');
 	browserSync({
 		server: {
@@ -411,10 +425,16 @@ gulp.task('create_dir', () => {
 		        'src/sky',
 		        'src/lead/js',
 		        'src/lead/scss',
+		        'src/lead/img',
+		        'src/lead/font',
 		        'src/rec/js',
 		        'src/rec/scss',
+		        'src/rec/img',
+		        'src/rec/font',
 		        'src/sky/js',
-		        'src/sky/scss'
+		        'src/sky/scss',
+		        'src/sky/img',
+		        'src/sky/font'
 		    ];
 
 		    folders.forEach(dir => {
@@ -441,6 +461,7 @@ gulp.task('create_dir', () => {
 		    gulp.start('create250x250Rec');
 		    gulp.start('create300X250Rec');
 		    gulp.start('create336x280Rec');
+		    gulp.start('create320x240Rec');
 
 		    gulp.start('normalize');
 		    gulp.start('gsap');
@@ -477,7 +498,6 @@ gulp.task('createIndexHTML', () => {
         <meta name="author" content="bgenius" />
 
         <!-- font embeded -->
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
 
         <!-- css -->
         <link rel="stylesheet" type="text/css" href="all.css" />
@@ -520,6 +540,7 @@ gulp.task('createStyleScss', () => {
 @import 'var';
 @import 'normalize';
 
+
 .spinner {
 	display: block;
 	margin: 100px auto;
@@ -542,6 +563,7 @@ gulp.task('createStyleScss', () => {
 	position: absolute;
 	top: 0;
 	background-color: $primaire_color;
+
 	border-radius: 100%;
 
 	-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
@@ -718,13 +740,13 @@ $formH: 250px;
     	.pipe(gulp.dest('src/rec/scss'));
 });
 
-gulp.task('create300X250Rec', () => {
-	var template300X250Rec =`
+gulp.task('create300x250Rec', () => {
+	var template300x250Rec =`
 $formW: 300px;
 $formH: 250px;
 	`;
 
-	return file('_300X250.scss', template300X250Rec, { src: true })
+	return file('_300x250.scss', template300x250Rec, { src: true })
     	.pipe(gulp.dest('src/rec/scss'));
 });
 
@@ -735,6 +757,16 @@ $formH: 280px;
 	`;
 
 	return file('_336x280.scss', template336x280Rec, { src: true })
+    	.pipe(gulp.dest('src/rec/scss'));
+});
+
+gulp.task('create320x240Rec', () => {
+	var template320x240Rec =`
+$formW: 320px;
+$formH: 240px;
+	`;
+
+	return file('_320x240.scss', template320x240Rec, { src: true })
     	.pipe(gulp.dest('src/rec/scss'));
 });
 

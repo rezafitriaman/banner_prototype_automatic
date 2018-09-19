@@ -1,4 +1,106 @@
 
 $formW: 160px;
 $formH: 600px;
-	
+
+$mainFontSize: 0;
+$footerHeight: 16.6%;
+$mainContentHeight: 83.4%;
+$productSectionHeight: 500px;
+$productImgHeight: 130px;
+$productImgTop: 10px;
+$productImgMargin: 0 15px 15px 15px;
+$productInfoMarginBtm: 15px;
+$productInfoTop: 24px;
+$productSubtitleFontSize: 8pt;
+$productNameWidth: 80%;
+$campaignTypeTop: 88px;
+$campaignTypeHeight: 88px;
+$campaignTypeImgSize: 86px;
+$footerBestelSpanSize: 11pt;
+$cloverScale: 1.3;
+$cloverBottom: 10px;
+
+$inslaanTagFontSize: 14pt;
+$inslaanTagWidth: 83px;
+$inslaanTagHeight: 23px;
+$inslaanTagLineheight: 23px;
+
+$inslaanPriceBottom: 14px;
+$inslaanPriceFontsize: 55pt;
+$inslaanPriceMargin: 0 0 0 13px;
+
+$inslaanCentFontsize: 31pt;
+$inslaanCentBottom: 22.2px;
+$inslaanCentRight: 17px;
+
+$inslaanPlusFontsize: 59pt;
+$inslaanPlusCharFontsize: 35pt;
+$inslaanGratisTagBottom: 18.5px;
+$inslaanGratisTagFontsize: 16pt;
+$inslaanGratisTagWidth: 92px;
+$inslaanGratisTagHeight: 24px;
+
+$inslaanTxtStroke: 8px white;
+
+$footerBestelSpanSize: 5px 8px 5px 8px;
+$footerBestelLineheight: 17px;
+$footerBestelFontsize: 12pt;
+$footerTextAlign: center;
+$footerBestelDisplay: inline-block;
+$footerBestelArrowDisplay: inline-block;
+
+$mainImgSectionEndWidth: 93%;
+$mainImgSectionEndHeight: 21%;
+
+@mixin footer-image {
+	width: 70%;
+	height: 37%;
+	position: relative;
+	top: 25px;
+	margin: 0 auto;
+}
+
+@mixin footer-bestel {
+	left: 148px;
+	margin: 0 auto;
+	border-radius: 2px;
+	position: relative;
+	top: 12px;
+}
+
+@mixin main-txt-section {
+	margin: 0 auto;
+	width: 130px;
+}
+
+$mainimgsectionheight: 145px;
+$mainimgsectionwidth: 160px;
+
+$maintxtfontsize: 16px;
+$maintxtsectiontop : 80px;
+
+
+$halveprijsnumberfontsize: 160pt;
+$halveprijssmallfontsize: 91px;
+$halveprijssmalltop: 26px;
+$halveprijssmallright: -40px;
+
+$halveprijstagpaddingleft: 0px;
+$halveprijstagleft: 125px;
+$halveprijstagfontsizet: 37px;
+$halveprijstagbottom: 154px;
+
+$lifirstchildwidth: 155px;
+$linthchildbottom: 1px;
+$linthchildwidth: 145px;
+
+$inslaanpluscharletterheight: 120px;
+$inslaanhalveprijstransform :  scale(0.3);
+$inslaanhalveprijstop: -45px; 
+
+$stroketexthalvewebkittextstroke: 21px white;
+
+$inslaanhalveprijsright: 16px; 
+$stroketextletterspacing: 2px;
+
+$productnamefontsize: 15pt;

@@ -1,4 +1,54 @@
 
 /*custom _var*/
 $primaire_color: #30b4e7;
-	
+
+@font-face {
+	font-family: Gotham-book;
+	src: url("Gotham-Book.eot?#iefix") format('embedded-opentype');
+	src: url("Gotham-Book.otf?#iefix") format('opentype'),
+		 url("Gotham-Book.ttf?#iefix") format('truetype'),
+		 url("Gotham-Book.woff2") format('woff2'),
+		 url("Gotham-Book.woff") format('woff'),
+		 url("Gotham-Book.svg#Gotham-book") format("svg");
+}
+
+@font-face {
+	font-family: Gotham-black;
+	src: url("Gotham-Black.eot?#iefix") format('embedded-opentype');
+	src: url("Gotham-Black.otf") format("opentype"),
+		 url("Gotham-Black.ttf?#iefix") format('truetype'),
+		 url("Gotham-Black.woff2") format('woff2'),
+		 url("Gotham-Black.woff") format('woff'),
+		 url("Gotham-Black.svg#Gotham-black") format("svg");
+}
+
+@font-face {
+	font-family: Gotham-bold;
+	src: url("Gotham-Bold.eot?#iefix") format('embedded-opentype');
+	src: url("Gotham-Bold.otf?#iefix") format('opentype'),
+		 url("Gotham-Bold.ttf?#iefix") format('truetype'),
+		 url("Gotham-Bold.woff2") format('woff2'),
+		 url("Gotham-Bold.woff") format('woff'),
+		 url("Gotham-Bold.svg#Gotham-bold") format("svg");
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('Gotham-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// @font-face {
+//   font-family: 'Gotham';
+//   src: url('Gotham-Ultra.woff') format('woff');
+//   font-weight: 800;
+//   font-style: normal;
+// }
+
+@mixin background-image($url) {
+	background-image: url($url);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
